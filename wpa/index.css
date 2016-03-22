@@ -26,7 +26,7 @@ h1
 
 #wpa-left
 {
-	width: 50%;
+	width: 30%;
 	height: 100%;
 	float: left;
 	padding: 5px 5px 5px 5px;
@@ -54,7 +54,7 @@ h1
 {
 	overflow-y: auto;
 	width: 100%;
-	height: calc(100% - 31px - 31px);
+	height: calc(100% - 31px - 31px - 5px);
 }
 
 #wpa-packet-table
@@ -89,7 +89,7 @@ h1
 
 #wpa-right
 {
-	width: 50%;
+	width: 70%;
 	height: 100%;
 	float: right;
 	padding: 5px;
@@ -104,7 +104,9 @@ h1
 {
 	border: none;
 	width: 100%;
-	height: 200px;
+	height: 150px;
 	resize: none;
 	display: block;
+	font-family: Consolas;
+	padding: 2px;
 }
