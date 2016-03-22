@@ -14,6 +14,31 @@ $(document).on('click', '#analyzepackets', function()
 	wpa.GetPacketsAndAnalyze();
 });
 
+$(document).on('click', '#savepackets', function()
+{
+	wpa.SavePackets();
+});
+
+$(document).on('click', '#loadpackets', function()
+{
+	$('.wpa-hider').fadeIn();
+	$('#loadpacketsmodal').fadeIn();
+});
+
+$(document).on('click', '.wpa-load-packet-btn', function()
+{
+	$('.wpa-hider').fadeIn();
+	$('#loadpacketsmodal').fadeIn();
+
+	wpa.LoadPackets($(this).data('load'));
+});
+
+$(document).on('click', '.wpa-modal-close', function()
+{
+	$('.wpa-hider').fadeOut();
+	$(this).parent('div').parent('div.wpa-modal').fadeOut();
+});
+
 $(document).on('click', '#wpa-packet-table td:first-child', function()
 {
 	var $this = $(this);

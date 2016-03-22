@@ -17,6 +17,15 @@
 			$(document).ready(function()
 			{
 				wpa = new Wpa($('#wpa-packet-table'), $('#wpa-analyze'));
+
+				for(i = 0; i < localStorage.length; i++)
+				{
+					var key = localStorage.key(i);
+					var val = localStorage.getItem(key);
+
+					$('#wpa-saved-packets').append('<tr><td>' + key + '</td><td><input type = "button" value = "LOAD" ' + 
+					'class = "wpa-load-packet-btn" data-load = "' + key + '"/></td></tr>');
+				}
 			});
 		</script>
 	</head>
@@ -56,6 +65,8 @@
 				<div id = "wpa-left-control-wrapper">
 					<input type = "button" value = "New WPE packet" id = "newpacket" class = "wpa-button"/>
 					<input type = "button" value = "Analyze packets" id = "analyzepackets" class = "wpa-button"/>
+					<input type = "button" value = "Load packets" id = "loadpackets" class = "wpa-button"/>
+					<input type = "button" value = "Save packets" id = "savepackets" class = "wpa-button"/>
 				</div>
 				
 			</div>
@@ -68,5 +79,23 @@
 				</table>
 			</div>
 		</div>
+
+		<div class = "wpa-hider"></div>
+		<div id = "loadpacketsmodal" class = "wpa-modal">
+			<div class = "wpa-modal-toolbar">
+				<div class = "wpa-modal-close">
+				X
+				</div>
+			</div>
+			<div class = "wpa-modal-content">
+				<table id = "wpa-saved-packets">
+					<tr>
+						<th>KEY</th>
+						<th>LOAD?</th>
+					</tr>
+				</table>
+			</div>
+		</div>
+
 	</body>
 </html>

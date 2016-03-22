@@ -155,3 +155,92 @@ h1
 	font-family: Consolas;
 	padding: 2px;
 }
+
+.wpa-hider
+{
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(44, 62, 80, 0.85);
+	display: none;
+}
+
+.wpa-modal
+{
+	position: absolute;
+	width: 40%;
+	height: 80%;
+	background-color: rgba(44, 62, 80, 0.85);
+	display: none;
+
+	left: calc(50% - (40% / 2));
+	top: calc(50% - (80% / 2));
+}
+
+.wpa-modal-toolbar
+{
+	height: 35px;
+	width: 100%;
+	border: 1px solid rgba(189, 195, 199,1.0);
+}
+
+.wpa-modal-close
+{
+	width: 35px;
+	height: 35px;
+	color: white;
+	font-size: 18pt;
+	line-height: 35px;
+	text-align: center;
+	border-left: 1px solid rgba(189, 195, 199, 1.0);
+	float: right;
+}
+
+.wpa-modal-close:hover
+{
+	cursor: pointer;
+}
+
+.wpa-modal-content
+{
+	height: calc(100% - 35px);
+	width: 100%;
+	border-bottom: 1px solid rgba(189, 195, 199, 1.0);
+	border-left: 1px solid rgba(189, 195, 199, 1.0);
+	border-right: 1px solid rgba(189, 195, 199, 1.0);
+
+	padding: 10px;
+
+	overflow-y: auto;
+}
+
+#wpa-saved-packets
+{
+	width: 100%;
+	height: auto;
+	border-collapse: collapse;
+	color: white;
+}
+
+#wpa-saved-packets td
+{
+	text-align: center;
+}
+
+#wpa-saved-packets td:last-child input
+{
+	padding: 5px 8px 5px 8px;
+}
+
+#wpa-saved-packets td
+{
+	padding: 10px;
+}
+
+#wpa-saved-packets th
+{
+	border-bottom: 1px solid white;
+	padding: 10px;
+}

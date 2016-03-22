@@ -18,6 +18,17 @@ function Wpa($packet_table, $log)
 	this.$log = $log;
 
 	this.packets = [];
+
+	this.colors = 
+	{
+		RED: '#c0392b',
+		GREEN: '#2bbc67',
+		BLUE: '#2980b9',
+		YELLOW: '#f1c40f',
+		ORANGE: '#e78128',
+		WIST: '#8e44ad',
+		GRAY: '#7f8c8d'
+	}
 }
 
 Wpa.prototype.GetPacketsFromDOM = function()
@@ -66,23 +77,59 @@ Wpa.prototype.AnalyzePackets = function()
 		return;
 	}
 
+	self.ClearLog();
+
+	self.Log('Analysis result', null, true);
+
+	self.Loop(function(packet, i)
+	{
+		self.Log('Packet #' + i, self.colors.WIST);
+	});
+
 	// Find the bitcount of the packet with the most bits
 	var maxbits = 0;
+
+	self.Loop(function(packet)
+	{
+		if(packet.bits.length > maxbits)
+		{
+			maxbits = packet.bits.length;
+		}
+	});
+
+	self.Loop(function(packet)
+	{
+		for(var i = 0; i < maxbits; i++)
+		{
+			if(typeof packet.bits[i] === 'undefined')
+			{
+				self.Log('.. ', self.colors.RED);
+			}
+			else
+			{
+				self.Log(packet.bits[i] + ' ', self.colors.GRAY);
+			}
+		}
+
+		self.LogNewLine();
+	});
+}
+
+Wpa.prototype.Loop = function(callback)
+{
+	var self = this;
+
+	var i = 0;
 
 	for(var key in self.packets)
 	{
 		if(self.packets.hasOwnProperty(key))
 		{
 			var packet = self.packets[key];
-
-			if(packet.bits.length > maxbits)
-			{
-				maxbits = packet.bits.length;
-			}
+			callback(packet, i);
+			i++;
 		}
 	}
-
-	console.log(maxbits);
 }
 
 Wpa.prototype.GetPacketsAndAnalyze = function()
@@ -91,12 +138,46 @@ Wpa.prototype.GetPacketsAndAnalyze = function()
 	this.AnalyzePackets();
 }
 
-Wpa.prototype.Log = function(str, color)
+Wpa.prototype.SavePackets = function()
+{
+	var self = this;
+
+	this.GetPacketsFromDOM();
+
+	if(this.packets.length === 0)
+	{
+		throw new Error('WPA has no packets save!');
+		return;
+	}
+
+	var name = window.prompt('Save file name?');
+
+	localStorage.setItem(name, JSON.stringify(self.packets));
+}
+
+Wpa.prototype.LoadPackets = function(key)
+{
+	var packets = JSON.parse(localStorage.getItem(key));
+	console.log(packets);
+}
+
+Wpa.prototype.Log = function(str, color, newline)
 {
 	var self = this;
 	color = color || 'black';
 
-	this.$log.append('<span style = "color: ' + color + ';">' + str + '</span><br/>');
+	if(newline)
+		var nl = '<br/><br/>';
+	else
+		var nl = '';
+
+	this.$log.append('<span style = "color: ' + color + ';">' + str + '</span>' + nl);
+}
+
+Wpa.prototype.LogNewLine = function()
+{
+	var self = this;
+	this.$log.append('<br/><br/>');
 }
 
 Wpa.prototype.ClearLog = function()
