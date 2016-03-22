@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+	<head>
+		<title>WPA</title>
+
+		<link rel = "stylesheet" type = "text/css" href = "index.css">
+		<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+
+
+		<script src = "jquery-2.2.2.min.js"></script>
+		<script src = "index.js"></script>
+	</head>
+	<body>
+		<div id = "wpa-wrapper">
+			<div id = "wpa-left">
+				<h1>Packet input</h1>
+
+				<div id = "wpa-packet-table-wrapper">
+					<table id = "wpa-packet-table">
+						<tr>
+							<th>#</th>
+							<th>Bits</th>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>
+								<textarea class = "wpa-packet-textarea"></textarea>
+							</td>
+						</tr>
+						<tr>
+							<td>2</td>
+							<td>
+								<textarea class = "wpa-packet-textarea"></textarea>
+							</td>
+						</tr>
+					</table>
+				</div>
+
+				<div id = "wpa-left-control-wrapper">
+					<input type = "button" value = "New WPE packet" id = "newpacket" class = "wpa-button"/>
+					<input type = "button" value = "Analyze packets" id = "analyzepackets" class = "wpa-button"/>
+				</div>
+				
+			</div>
+
+			<div id = "wpa-right">
+				<h1>Analyzed output</h1>
+			</div>
+		</div>
+	</body>
+</html>

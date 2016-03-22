@@ -1,0 +1,110 @@
+*
+{
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	font-family: 'Roboto', sans-serif;
+}
+
+html, body
+{
+	width: 100%;
+	height: 100%;
+}
+
+h1
+{
+	font-family: 'Roboto', sans-serif;
+	font-size: 16pt;
+}
+
+#wpa-wrapper
+{
+	width: 100%;
+	height: 100%;
+}
+
+#wpa-left
+{
+	width: 50%;
+	height: 100%;
+	float: left;
+	padding: 5px 5px 5px 5px;
+	border-right: 1px solid black;
+}
+
+#wpa-left-control-wrapper
+{
+	width: 100%;
+	height: calc(36px + 5px + 5px);
+	padding: 5px 0px 5px 0px;
+}
+
+#wpa-left-control-wrapper input
+{
+	float: right;
+}
+
+#wpa-left-control-wrapper input:not(:last-child)
+{
+	margin-left: 5px;
+}
+
+#wpa-packet-table-wrapper
+{
+	overflow-y: auto;
+	width: 100%;
+	height: calc(100% - 31px - 31px);
+}
+
+#wpa-packet-table
+{
+	width: calc(100%);
+	height: auto;
+	/*border-collapse: separate;*/
+	border-spacing: 0px 10px;
+	margin-top: 5px;
+}
+
+#wpa-packet-table td
+{
+	padding: 0px;
+}
+
+#wpa-packet-table td:first-child
+{
+	text-align: center;
+	width: 35px;
+	border-top: 1px solid black;
+	border-left: 1px solid black;
+	border-bottom: 1px solid black;
+}
+
+#wpa-packet-table td:last-child
+{
+	width: auto;
+	border: 1px solid black;
+
+}
+
+#wpa-right
+{
+	width: 50%;
+	height: 100%;
+	float: right;
+	padding: 5px;
+}
+
+.wpa-button
+{
+	padding: 8px 8px 8px 8px;
+}
+
+.wpa-packet-textarea
+{
+	border: none;
+	width: 100%;
+	height: 200px;
+	resize: none;
+	display: block;
+}
