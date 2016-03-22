@@ -9,6 +9,16 @@
 
 		<script src = "jquery-2.2.2.min.js"></script>
 		<script src = "index.js"></script>
+		<script src = "wpa.js"></script>
+
+		<script>
+			var wpa = null;
+
+			$(document).ready(function()
+			{
+				wpa = new Wpa($('#wpa-packet-table'));
+			});
+		</script>
 	</head>
 	<body>
 		<div id = "wpa-wrapper">
