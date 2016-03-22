@@ -5,6 +5,7 @@ $(document).on('click', '#newpacket', function()
 	var $clone = $wpa_packet_table.find('tr').eq(1).clone();
 
 	$clone.find('td:first-child').text(rowcount);
+	$clone.find('textarea').val('');
 	$wpa_packet_table.append($clone);
 });
 
