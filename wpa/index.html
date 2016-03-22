@@ -19,16 +19,23 @@
 					<table id = "wpa-packet-table">
 						<tr>
 							<th>#</th>
+							<th>Options</th>
 							<th>Bits</th>
 						</tr>
 						<tr>
 							<td>1</td>
+							<td>
+								<input type = "button" value = "O" class = "wpa-packet-opt"/>
+							</td>
 							<td>
 								<textarea class = "wpa-packet-textarea"></textarea>
 							</td>
 						</tr>
 						<tr>
 							<td>2</td>
+							<td>
+								<input type = "button" value = "O" class = "wpa-packet-opt"/>
+							</td>
 							<td>
 								<textarea class = "wpa-packet-textarea"></textarea>
 							</td>
@@ -45,6 +52,10 @@
 
 			<div id = "wpa-right">
 				<h1>Analyzed output</h1>
+
+				<div id = "wpa-analyze-wrapper">
+					<textarea id = "wpa-analyze"></textarea>
+				</table>
 			</div>
 		</div>
 	</body>
