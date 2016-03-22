@@ -18,7 +18,7 @@ wpe-packet-analyzer (WPA) automatically finds out packet bit deltas and offsets 
 A) Heuristically find out, if given packets seem to have `common blocks`, such as `time` or `id` bits at the beginning of the packet  
 B) Help to convert hex bits to decimal and perhaps even back again if needed (ASCII presentation also a possibility, although usually not useful  
 C) Assist with marking certain bits obsolete or socket-breaking  
-D) Maybe accept WPE capture files and read input directly from them
+D) Maybe accept WPE capture files and read input directly from them  
 E) Cure cancer and make data mining of software (read: games) not so painful and maybe even fun
 
 **Definition of done:**  
