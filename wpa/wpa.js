@@ -66,17 +66,41 @@ Wpa.prototype.AnalyzePackets = function()
 		return;
 	}
 
-	
+	// Find the bitcount of the packet with the most bits
+	var maxbits = 0;
+
+	for(var key in self.packets)
+	{
+		if(self.packets.hasOwnProperty(key))
+		{
+			var packet = self.packets[key];
+
+			if(packet.bits.length > maxbits)
+			{
+				maxbits = packet.bits.length;
+			}
+		}
+	}
+
+	console.log(maxbits);
 }
 
-Wpa.prototype.Log = function(str)
+Wpa.prototype.GetPacketsAndAnalyze = function()
 {
-	var self = this;
-	this.$log.val(this.$log.val() + str + '\n');
+	this.GetPacketsFromDOM();
+	this.AnalyzePackets();
 }
 
-Wpa.prototype.ClearLog = function(str)
+Wpa.prototype.Log = function(str, color)
 {
 	var self = this;
-	this.$log.val('');
+	color = color || 'black';
+
+	this.$log.append('<span style = "color: ' + color + ';">' + str + '</span><br/>');
+}
+
+Wpa.prototype.ClearLog = function()
+{
+	var self = this;
+	this.$log.empty();
 }

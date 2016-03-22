@@ -9,6 +9,11 @@ $(document).on('click', '#newpacket', function()
 	$wpa_packet_table.append($clone);
 });
 
+$(document).on('click', '#analyzepackets', function()
+{
+	wpa.GetPacketsAndAnalyze();
+});
+
 $(document).on('click', '#wpa-packet-table td:first-child', function()
 {
 	var $this = $(this);
