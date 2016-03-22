@@ -41,6 +41,11 @@ $(document).on('click', '.wpa-modal-close', function()
 
 $(document).on('click', '#wpa-packet-table td:first-child', function()
 {
+	if($('#wpa-packet-table tr').length - 1 <= 3)
+	{
+		return;
+	}
+
 	var $this = $(this);
 	$this.parent('tr').remove();
 
