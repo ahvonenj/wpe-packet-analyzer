@@ -1,4 +1,4 @@
-# wpe-packet-analyzer
+# wpe-packet-analyzer (WPA)
 
 ![](https://raw.githubusercontent.com/ahvonenj/wpe-packet-analyzer/master/wpe-bs.png)
 
