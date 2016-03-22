@@ -1,5 +1,7 @@
 # wpe-packet-analyzer
 
+![](https://raw.githubusercontent.com/ahvonenj/wpe-packet-analyzer/master/wpe-bs.png)
+
 When you have captured network packets with WPE and want to compare similar packets to find deltas and offsets, 
 you would often have to fire up Microsoft Excel and get annoyed because:
 
