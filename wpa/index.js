@@ -41,7 +41,7 @@ $(document).on('click', '.wpa-modal-close', function()
 
 $(document).on('click', '#wpa-packet-table td:first-child', function()
 {
-	if($('#wpa-packet-table tr').length - 1 <= 3)
+	if($('#wpa-packet-table tr:not(:first-child)').length - 1 < 2)
 	{
 		return;
 	}
