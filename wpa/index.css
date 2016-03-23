@@ -18,6 +18,28 @@ h1
 	font-size: 16pt;
 }
 
+a
+{
+	text-decoration: none;
+}
+
+a:visited
+{
+	text-decoration: none;
+}
+
+a:active
+{
+	text-decoration: none;
+	color: #d35400;
+}
+
+a:hover > *
+{
+	text-decoration: none;
+	color: #1abc9c !important;
+}
+
 #wpa-wrapper
 {
 	width: 100%;

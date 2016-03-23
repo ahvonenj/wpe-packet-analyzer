@@ -29,6 +29,8 @@ function Wpa($packet_table, $log)
 		WIST: '#8e44ad',
 		GRAY: '#7f8c8d'
 	}
+
+	this.logbuffer = '';
 }
 
 Wpa.prototype.GetPacketsFromDOM = function()
@@ -53,12 +55,7 @@ Wpa.prototype.GetPacketsFromDOM = function()
 
 		if(packetbits.length > 0)
 		{
-			self.packets.push(
-			{
-				num: packetnum,
-				opt: packetopt,
-				bits: packetbits
-			});
+			self.packets.push(new Packet(packetnum, packetopt, packetbits));
 		}
 		else
 		{
@@ -81,43 +78,67 @@ Wpa.prototype.AnalyzePackets = function()
 
 	self.Log('Analysis result', null, true);
 
+
+	self.Log('--Analyzed packets--', self.colors.BLUE, true);
 	self.Loop(function(packet, i)
 	{
-		self.Log('Packet #' + packet.num, self.colors.WIST, true);
+		self.Log('Packet #' + packet.num + ' (' + packet.length + ' bytes)', self.colors.WIST, true);
 
-		for(var i = 0; i < packet.bits.length; i++)
-		{
-			self.Log(packet.bits[i] + ' ', self.colors.GRAY);
-		}
+		self.LogH('<a href = "#" class = "interactivebits">');
+		self.Log(packet.bitsToString(), self.colors.GRAY, false, true);
+		self.LogH('</a>');
 
+		self.LogBuffer(true);
 		self.LogNewLine();
 	});
 
 	// Find the bitcount of the packet with the most bits
 	var maxbits = 0;
+	var largestpacket = null;
 
 	self.Loop(function(packet)
 	{
 		if(packet.bits.length > maxbits)
 		{
-			maxbits = packet.bits.length;
+			maxbits = packet.length;
 		}
 	});
 
+	self.Log('--Packet null bytes relative to largest packet (' + maxbits + ' bbytes)--', self.colors.BLUE, true);
 	self.Loop(function(packet)
 	{
+		var nullfound = false;
+
+		self.Log('Packet #' + packet.num, self.colors.WIST, true);
+
+		self.LogH('<a href = "#" class = "interactivebits">');
+
 		for(var i = 0; i < maxbits; i++)
 		{
 			if(typeof packet.bits[i] === 'undefined')
 			{
+				if(!nullfound)
+				{
+					self.LogH('</a>');
+					self.LogBuffer(true);
+				}
+
 				self.Log('.. ', self.colors.RED);
+
+				nullfound = true;
 			}
 			else
 			{
-				self.Log(packet.bits[i] + ' ', self.colors.GRAY);
+				self.Log(packet.bits[i] + ' ', self.colors.GRAY, false, true);
 			}
 		}
 
+		if(!nullfound)
+		{
+			self.LogH('</a>');
+			self.LogBuffer(true);
+		}
+		
 		self.LogNewLine();
 	});
 }
@@ -186,19 +207,45 @@ Wpa.prototype.LoadPackets = function(key)
 			console.log(packet);
 		}
 	}
+
+	this.packets = packets;
 }
 
-Wpa.prototype.Log = function(str, color, newline)
+Wpa.prototype.Log = function(str, color, newline, buffered)
 {
 	var self = this;
 	color = color || 'black';
+	buffered = buffered || false;
 
 	if(newline)
 		var nl = '<br/><br/>';
 	else
 		var nl = '';
 
-	this.$log.append('<span style = "color: ' + color + ';">' + str + '</span>' + nl);
+	if(buffered)
+	{
+		this.logbuffer += '<span style = "color: ' + color + ';">' + str + '</span>' + nl;
+	}
+	else
+	{
+		this.$log.append('<span style = "color: ' + color + ';">' + str + '</span>' + nl);
+	}
+}
+
+Wpa.prototype.LogH = function(html)
+{
+	var self = this;
+	this.logbuffer += html;
+}
+
+Wpa.prototype.LogBuffer = function(clearbuffer)
+{
+	clearbuffer = clearbuffer || false;
+
+	this.$log.append(this.logbuffer);
+
+	if(clearbuffer)
+		this.logbuffer = '';
 }
 
 Wpa.prototype.LogNewLine = function()
