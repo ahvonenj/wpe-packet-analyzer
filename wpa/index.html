@@ -23,6 +23,7 @@
 				wpa = new Wpa($('#wpa-packet-table'), $('#wpa-analyze'));
 
 				refreshSavedPackets();
+				wpa.DemoLoadPackets();
 			});
 		</script>
 	</head>
@@ -44,7 +45,9 @@
 								<input type = "button" value = "Open" class = "wpa-packet-opt"/>
 							</td>
 							<td>
-								<textarea class = "wpa-packet-textarea"></textarea>
+								<textarea class = "wpa-packet-textarea">
+									
+								</textarea>
 							</td>
 						</tr>
 						<tr>
@@ -53,7 +56,9 @@
 								<input type = "button" value = "Open" class = "wpa-packet-opt"/>
 							</td>
 							<td>
-								<textarea class = "wpa-packet-textarea"></textarea>
+								<textarea class = "wpa-packet-textarea">
+									
+								</textarea>
 							</td>
 						</tr>
 					</table>
