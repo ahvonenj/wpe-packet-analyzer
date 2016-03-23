@@ -23,3 +23,9 @@ E) Cure cancer and make data mining of software (read: games) not so painful and
 
 **Definition of done:**  
 If I am able to perform a simple filtered packet bitswap in under 5 minutes, then this tool has done its job.
+
+## Early demo is now available 
+
+http://ahvonenj.github.io/wpe-packet-analyzer/#
+
+Just press the `Analyze packets` button and see the magic happen! You can mouse over the analyzed bytes to highlight them as well as click to copy them straight to your clipboard (if you browser supports it).
