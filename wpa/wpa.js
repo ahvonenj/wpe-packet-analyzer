@@ -109,7 +109,7 @@ Wpa.prototype.AnalyzePackets = function()
 	{
 		var nullfound = false;
 
-		self.Log('Packet #' + packet.num, self.colors.WIST, true);
+		self.LogI('Packet #' + packet.num, self.colors.WIST, true, false, { asd: packet.num });
 
 		self.LogH('<a href = "#" class = "interactivebits">');
 
@@ -232,6 +232,29 @@ Wpa.prototype.Log = function(str, color, newline, buffered)
 	}
 }
 
+Wpa.prototype.LogI = function(str, color, newline, buffered, hoverinfo)
+{
+	var self = this;
+	color = color || 'black';
+	buffered = buffered || false;
+
+	if(newline)
+		var nl = '<br/><br/>';
+	else
+		var nl = '';
+
+	hoverinfo = JSON.stringify(hoverinfo).replace(/"/g, "&quot;").replace(/'/g, '&apos;').replace(/&/g, '&amp;');
+
+	if(buffered)
+	{
+		this.logbuffer += '<span class = "hoverinfo" data-wpa = "' + hoverinfo + '" style = "color: ' + color + ';">' + str + '</span>' + nl;
+	}
+	else
+	{
+		this.$log.append('<span class = "hoverinfo" data-wpa = "' + hoverinfo + '" style = "color: ' + color + ';">' + str + '</span>' + nl);
+	}
+}
+
 Wpa.prototype.LogH = function(html)
 {
 	var self = this;
@@ -258,4 +281,9 @@ Wpa.prototype.ClearLog = function()
 {
 	var self = this;
 	this.$log.empty();
+}
+
+Wpa.prototype.ParseWpa = function(wpa)
+{
+	return JSON.parse(wpa.replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(/&amp;/g, '&'));
 }
