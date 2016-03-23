@@ -83,7 +83,14 @@ Wpa.prototype.AnalyzePackets = function()
 
 	self.Loop(function(packet, i)
 	{
-		self.Log('Packet #' + i, self.colors.WIST);
+		self.Log('Packet #' + packet.num, self.colors.WIST, true);
+
+		for(var i = 0; i < packet.bits.length; i++)
+		{
+			self.Log(packet.bits[i] + ' ', self.colors.GRAY);
+		}
+
+		self.LogNewLine();
 	});
 
 	// Find the bitcount of the packet with the most bits
@@ -158,7 +165,27 @@ Wpa.prototype.SavePackets = function()
 Wpa.prototype.LoadPackets = function(key)
 {
 	var packets = JSON.parse(localStorage.getItem(key));
-	console.log(packets);
+
+	$('#wpa-packet-table tr:not(:first-child)').remove();
+
+	for(var key in packets)
+	{
+		if(packets.hasOwnProperty(key))
+		{
+			var packet = packets[key];
+			var strbits = packet.bits.join(' ');
+
+			var toappend = '<tr>';
+			toappend += '<td>' + packet.num + '</td>';
+			toappend += '<td><input type="button" value="Open" class="wpa-packet-opt"></td>';
+			toappend += '<td><textarea class="wpa-packet-textarea">' + strbits + '</textarea></td>';
+			toappend += '</tr>';
+
+			$('#wpa-packet-table').append(toappend);
+
+			console.log(packet);
+		}
+	}
 }
 
 Wpa.prototype.Log = function(str, color, newline)

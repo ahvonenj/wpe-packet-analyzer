@@ -28,8 +28,8 @@ $(document).on('click', '#loadpackets', function()
 
 $(document).on('click', '.wpa-load-packet-btn', function()
 {
-	$('.wpa-hider').fadeIn();
-	$('#loadpacketsmodal').fadeIn();
+	$('.wpa-hider').fadeOut();
+	$('#loadpacketsmodal').fadeOut();
 
 	wpa.LoadPackets($(this).data('load'));
 });
