@@ -127,6 +127,7 @@ h1
 	display: block;
 	font-family: Consolas;
 	padding: 5px;
+	overflow-y: auto;
 }
 
 #wpa-analyze span
