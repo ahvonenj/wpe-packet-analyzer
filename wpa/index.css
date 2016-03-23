@@ -203,6 +203,24 @@ h1
 	cursor: pointer;
 }
 
+.wpa-modal-refresh
+{
+	width: auto;
+	height: 35px;
+	color: white;
+	font-size: 12pt;
+	line-height: 35px;
+	text-align: center;
+	border-left: 1px solid rgba(189, 195, 199, 1.0);
+	float: right;
+	padding: 0px 4px 0px 4px;
+}
+
+.wpa-modal-refresh:hover
+{
+	cursor: pointer;
+}
+
 .wpa-modal-content
 {
 	height: calc(100% - 35px);
@@ -229,7 +247,7 @@ h1
 	text-align: center;
 }
 
-#wpa-saved-packets td:last-child input
+#wpa-saved-packets td input
 {
 	padding: 5px 8px 5px 8px;
 }

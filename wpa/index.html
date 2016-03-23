@@ -18,14 +18,7 @@
 			{
 				wpa = new Wpa($('#wpa-packet-table'), $('#wpa-analyze'));
 
-				for(i = 0; i < localStorage.length; i++)
-				{
-					var key = localStorage.key(i);
-					var val = localStorage.getItem(key);
-
-					$('#wpa-saved-packets').append('<tr><td>' + key + '</td><td><input type = "button" value = "LOAD" ' + 
-					'class = "wpa-load-packet-btn" data-load = "' + key + '"/></td></tr>');
-				}
+				refreshSavedPackets();
 			});
 		</script>
 	</head>
@@ -86,12 +79,16 @@
 				<div class = "wpa-modal-close">
 				X
 				</div>
+				<div class = "wpa-modal-refresh">
+				REFRESH LIST
+				</div>
 			</div>
 			<div class = "wpa-modal-content">
 				<table id = "wpa-saved-packets">
 					<tr>
 						<th>KEY</th>
 						<th>LOAD?</th>
+						<th>DELETE?</th>
 					</tr>
 				</table>
 			</div>

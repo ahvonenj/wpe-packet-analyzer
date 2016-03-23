@@ -17,6 +17,7 @@ $(document).on('click', '#analyzepackets', function()
 $(document).on('click', '#savepackets', function()
 {
 	wpa.SavePackets();
+	refreshSavedPackets();
 });
 
 $(document).on('click', '#loadpackets', function()
@@ -33,10 +34,21 @@ $(document).on('click', '.wpa-load-packet-btn', function()
 	wpa.LoadPackets($(this).data('load'));
 });
 
+$(document).on('click', '.wpa-delete-packet-btn', function()
+{
+	localStorage.removeItem($(this).data('delete'));
+	refreshSavedPackets();
+});
+
 $(document).on('click', '.wpa-modal-close', function()
 {
 	$('.wpa-hider').fadeOut();
 	$(this).parent('div').parent('div.wpa-modal').fadeOut();
+});
+
+$(document).on('click', '.wpa-modal-refresh', function()
+{
+	refreshSavedPackets();
 });
 
 $(document).on('click', '#wpa-packet-table td:first-child', function()
@@ -75,3 +87,26 @@ $(document).on('mouseleave', '#wpa-packet-table td:first-child', function()
 
 	$this.text($this.data('num'));
 });
+
+function refreshSavedPackets()
+{
+	$('#wpa-saved-packets tr:not(:first-child)').remove();
+
+	for(i = 0; i < localStorage.length; i++)
+	{
+		var key = localStorage.key(i);
+		var val = localStorage.getItem(key);
+
+		if(key.substring(0, 4).indexOf('wpa-') > -1)
+		{
+			key = key.substring(4, key.length);
+			$('#wpa-saved-packets').append('<tr><td>' + key + '</td><td><input type = "button" value = "LOAD" ' + 
+			'class = "wpa-load-packet-btn" data-load = "wpa-' + key + '"/></td><td><input type = "button" value = "DELETE" ' + 
+			'class = "wpa-delete-packet-btn" data-delete = "wpa-' + key + '"/></td></tr>');
+		}
+		else
+		{
+			console.log('Skipping non-wpa item');
+		}
+	}
+}

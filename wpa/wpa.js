@@ -152,7 +152,7 @@ Wpa.prototype.SavePackets = function()
 
 	var name = window.prompt('Save file name?');
 
-	localStorage.setItem(name, JSON.stringify(self.packets));
+	localStorage.setItem('wpa-' + name, JSON.stringify(self.packets));
 }
 
 Wpa.prototype.LoadPackets = function(key)
