@@ -44,22 +44,22 @@ Wpa.prototype.GetPacketsFromDOM = function()
 		var $this = $(this);
 		var packetnum = $this.children('td').eq('0').text();
 		var packetopt = $this.children('td').eq('1').data('opt');
-		var packetbits = $this.children('td').eq('2').find('textarea').val();
+		var packetbytes = $this.children('td').eq('2').find('textarea').val();
 
-		packetbits = packetbits.split(' ');
+		packetbytes = packetbytes.split(' ');
 
-		if(packetbits[packetbits.length - 1] === '')
+		if(packetbytes[packetbytes.length - 1] === '')
 		{
-			packetbits.splice(packetbits.length - 1, 1);
+			packetbytes.splice(packetbytes.length - 1, 1);
 		}
 
-		if(packetbits.length > 0)
+		if(packetbytes.length > 0)
 		{
-			self.packets.push(new Packet(packetnum, packetopt, packetbits));
+			self.packets.push(new Packet(packetnum, packetopt, packetbytes));
 		}
 		else
 		{
-			console.log('WPA skipping empty bitted packet')
+			console.log('WPA skipping empty packet')
 		}
 	});
 }
@@ -85,26 +85,26 @@ Wpa.prototype.AnalyzePackets = function()
 		self.Log('Packet #' + packet.num + ' (' + packet.length + ' bytes)', self.colors.WIST, true);
 
 		self.LogH('<a href = "#" class = "interactivebits">');
-		self.Log(packet.bitsToString(), self.colors.GRAY, false, true);
+		self.Log(packet.bytesToString(), self.colors.GRAY, false, true);
 		self.LogH('</a>');
 
 		self.LogBuffer(true);
 		self.LogNewLine();
 	});
 
-	// Find the bitcount of the packet with the most bits
+	// Find the bytecount of the packet with the most bytes
 	var maxbits = 0;
 	var largestpacket = null;
 
 	self.Loop(function(packet)
 	{
-		if(packet.bits.length > maxbits)
+		if(packet.bytes.length > maxbits)
 		{
 			maxbits = packet.length;
 		}
 	});
 
-	self.Log('--Packet null bytes relative to largest packet (' + maxbits + ' bbytes)--', self.colors.BLUE, true);
+	self.Log('--Packet null bytes relative to largest packet (' + maxbits + ' bytes)--', self.colors.BLUE, true);
 	self.Loop(function(packet)
 	{
 		var nullfound = false;
@@ -115,7 +115,7 @@ Wpa.prototype.AnalyzePackets = function()
 
 		for(var i = 0; i < maxbits; i++)
 		{
-			if(typeof packet.bits[i] === 'undefined')
+			if(typeof packet.bytes[i] === 'undefined')
 			{
 				if(!nullfound)
 				{
@@ -129,7 +129,7 @@ Wpa.prototype.AnalyzePackets = function()
 			}
 			else
 			{
-				self.Log(packet.bits[i] + ' ', self.colors.GRAY, false, true);
+				self.Log(packet.bytes[i] + ' ', self.colors.GRAY, false, true);
 			}
 		}
 
@@ -194,12 +194,12 @@ Wpa.prototype.LoadPackets = function(key)
 		if(packets.hasOwnProperty(key))
 		{
 			var packet = packets[key];
-			var strbits = packet.bits.join(' ');
+			var strbytes = packet.bytes.join(' ');
 
 			var toappend = '<tr>';
 			toappend += '<td>' + packet.num + '</td>';
 			toappend += '<td><input type="button" value="Open" class="wpa-packet-opt"></td>';
-			toappend += '<td><textarea class="wpa-packet-textarea">' + strbits + '</textarea></td>';
+			toappend += '<td><textarea class="wpa-packet-textarea">' + strbytes + '</textarea></td>';
 			toappend += '</tr>';
 
 			$('#wpa-packet-table').append(toappend);

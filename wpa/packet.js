@@ -1,21 +1,21 @@
-function Packet(num, opt, bits)
+function Packet(num, opt, bytes)
 {
 	var self = this;
 
 	this.num = (typeof num === 'undefined') ? null : num;
 	this.opt = opt || {};
-	this.bits = bits || [];
+	this.bytes = bytes || [];
 
 	Object.defineProperty(this, 'length', 
 	{
 	    get: function () 
 	    {
-	    	return this.bits.length;
+	    	return this.bytes.length;
 	    }
 	});
 }
 
-Packet.prototype.bitsToString = function()
+Packet.prototype.bytesToString = function()
 {
-	return this.bits.join(' ');
+	return this.bytes.join(' ');
 }
