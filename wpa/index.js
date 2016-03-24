@@ -88,10 +88,21 @@ $(document).on('mouseleave', '#wpa-packet-table td:first-child', function()
 	$this.text($this.data('num'));
 });
 
-$(document).on('click', '.interactivebits', function(e)
+$(document).on('click', '.copyablebytes', function(e)
 {
 	copyTextToClipboard($(this).children('span').text());
 	Hopper.Hop(e, 'Copied!');
+});
+
+$(document).on('mouseenter', '.hoverbytes', function(e)
+{
+	var data = wpa.ParseWpa($(this).data('wpa'));
+	var $e = Hopper.HoverOn(e, 'Offset: ' + data.begin + '-' + data.end);
+
+	$(this).on('mouseleave', function()
+	{
+		Hopper.HoverOut($e);
+	})
 });
 
 function refreshSavedPackets()
