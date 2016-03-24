@@ -105,6 +105,47 @@ $(document).on('mouseenter', '.hoverbytes', function(e)
 	})
 });
 
+var keysdown = [];
+
+$(document).on('keydown', function(e)
+{
+    // Evaluate keycode into a lowercase human-readable letter
+    var key = String.fromCharCode(e.charCode).toLowerCase();
+    
+    // Figure what to do with each key
+    switch(key)
+    {
+        case 'c':
+            
+            break;
+            
+        default:
+            break;
+    }
+
+    if(keysdown.indexOf('c') === -1)
+    	keysdown.push('c');
+});
+
+$(document).on('keyup', function(e)
+{
+    // Evaluate keycode into a lowercase human-readable letter
+    var key = String.fromCharCode(e.charCode).toLowerCase();
+    
+    // Figure what to do with each key
+    switch(key)
+    {
+        case 'c':
+            
+            break;
+            
+        default:
+            break;
+    }
+
+    keysdown.splice(keysdown.indexOf(key), 1);
+});
+
 function refreshSavedPackets()
 {
 	$('#wpa-saved-packets tr:not(:first-child)').remove();
