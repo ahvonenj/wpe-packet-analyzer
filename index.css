@@ -26,18 +26,33 @@ a
 a:visited
 {
 	text-decoration: none;
+	cursor: default;
 }
 
 a:active
 {
 	text-decoration: none;
 	color: #d35400;
+	cursor: default;
 }
 
 a:hover > *
 {
-	text-decoration: none;
+	/*text-decoration: underline;*/
 	color: #1abc9c !important;
+	cursor: default;
+}
+
+a:hover
+{
+	cursor: default;
+}
+
+.byte:hover
+{
+	font-weight: 800;
+	color: rgb(255, 100, 217) !important;
+	cursor: default;
 }
 
 #wpa-wrapper

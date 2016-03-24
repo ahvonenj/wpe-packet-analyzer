@@ -88,11 +88,79 @@ $(document).on('mouseleave', '#wpa-packet-table td:first-child', function()
 	$this.text($this.data('num'));
 });
 
-$(document).on('click', '.interactivebits', function(e)
+$(document).on('click', '.copyablebytes, .hoverbytes', function(e)
 {
 	copyTextToClipboard($(this).children('span').text());
 	Hopper.Hop(e, 'Copied!');
 });
+
+$(document).on('mouseenter', '.hoverbytes', function(e)
+{
+	var data = wpa.ParseWpa($(this).data('wpa'));
+	var $e = Hopper.HoverOn(e, 'Offset: ' + data.begin + '-' + data.end);
+
+	$(this).on('mouseleave', function()
+	{
+		Hopper.HoverOut($e);
+	})
+});
+
+var keysdown = [];
+
+$(document).on('keydown', function(e)
+{
+    // Evaluate keycode into a lowercase human-readable letter
+    var key = String.fromCharCode(e.charCode).toLowerCase();
+    
+    // Figure what to do with each key
+    switch(key)
+    {
+        case 'c':
+            
+            break;
+            
+        default:
+            break;
+    }
+
+    if(keysdown.indexOf('c') === -1)
+    	keysdown.push('c');
+});
+
+$(document).on('keyup', function(e)
+{
+    // Evaluate keycode into a lowercase human-readable letter
+    var key = String.fromCharCode(e.charCode).toLowerCase();
+    
+    // Figure what to do with each key
+    switch(key)
+    {
+        case 'c':
+            
+            break;
+            
+        default:
+            break;
+    }
+
+    keysdown.splice(keysdown.indexOf(key), 1);
+});
+
+ $(document).on('mouseenter', '#wpa-analyze span.byte', function(e)
+ {
+ 	if(keysdown.indexOf('c') > -1)
+ 	{
+	 	var hex = $(this).text();
+	 	var dec = parseInt(hex, 16);
+
+		var $e = Hopper.HoverOn(e, hex + ' => ' + dec, { x: 0, y: -45});
+
+		$(this).on('mouseleave', function()
+		{
+			Hopper.HoverOut($e, true);
+		});
+	}
+ });
 
 function refreshSavedPackets()
 {
