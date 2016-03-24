@@ -79,17 +79,23 @@ Wpa.prototype.AnalyzePackets = function()
 
 	self.ClearLog();
 
-	self.Log('Analysis result', null, true);
+	self.Log('Analysis result', null, true, false, false);
 
 
 	// Log each packet normally at first
 	self.Log('--Analyzed packets--', self.colors.BLUE, true);
-	self.Loop(function(packet, i)
-	{
-		self.Log('Packet #' + packet.num + ' (' + packet.length + ' bytes)', self.colors.WIST, true);
 
-		self.LogH('<a href = "#" class = "interactivebytes">');
-		self.Log(packet.bytesToString(), self.colors.GRAY, false, true);
+	self.Loop(function(packet)
+	{
+		self.Log('Packet #' + packet.num + ' (' + packet.length + ' bytes)', self.colors.WIST, true, false, false);
+
+		self.LogH('<a href = "#" class = "copyablebytes">');
+
+		for(var i = 0; i < packet.bytes.length; i++)
+		{
+			self.Log(packet.bytes[i] + ' ', self.colors.GRAY, false, true);
+		}
+
 		self.LogH('</a>');
 
 		self.OutputBuffer(true);
@@ -125,14 +131,14 @@ Wpa.prototype.AnalyzePackets = function()
 
 
 	// Log packets while showing null bytes relative to largest packet
-	self.Log('--Packet null bytes relative to largest packet (' + this.analysismeta.minbytes + '-' + this.analysismeta.maxbytes + ' bytes)--', self.colors.BLUE, true);
+	self.Log('--Packet null bytes relative to largest packet (' + this.analysismeta.minbytes + '-' + this.analysismeta.maxbytes + ' bytes)--', self.colors.BLUE, true, false, false);
 	self.Loop(function(packet)
 	{
 		var nullfound = false;
 
-		self.LogD('Packet #' + packet.num, self.colors.WIST, true, false, 'hoverinfo', { asd: packet.num });
+		self.LogD('Packet #' + packet.num+ ' (' + packet.length + ' bytes)', self.colors.WIST, true, false, 'hoverinfo', { asd: packet.num }, false, false);
 
-		self.LogH('<a href = "#" class = "interactivebytes">');
+		self.LogH('<a href = "#" class = "copyablebytes">');
 
 		for(var i = 0; i < self.analysismeta.maxbytes; i++)
 		{
@@ -165,7 +171,7 @@ Wpa.prototype.AnalyzePackets = function()
 
 
 	// Log differing packets
-	self.Log('--Offsets that are different in every analyzed packet (using smaller packet as a base)--', self.colors.BLUE, true);
+	self.Log('--Offsets that are different in every analyzed packet (using smaller packet as a base)--', self.colors.BLUE, true, false, false);
 
 	(function()
 	{
@@ -179,7 +185,7 @@ Wpa.prototype.AnalyzePackets = function()
 		{
 			if(self.packets.hasOwnProperty(key))
 			{
-				self.LogD('Packet #' + self.packets[key].num, self.colors.WIST, true, false, 'hoverinfo', { asd: self.packets[key].num });
+				self.LogD('Packet #' + self.packets[key].num, self.colors.WIST, true, false, 'hoverinfo', { asd: self.packets[key].num }, false, false);
 
 				still_different = false;
 				different = false;
@@ -226,7 +232,7 @@ Wpa.prototype.AnalyzePackets = function()
 							{
 								delta_begin = i;
 
-								self.DataInjection('<a href = "#" class = "hoverbytes" data-wpa = "">');
+								self.DataInjection('<a href = "#" class = "copyablebytes hoverbytes" data-wpa = "">');
 							}
 
 							self.Log(bit + ' ', self.colors.GREEN, false, true);
@@ -350,48 +356,64 @@ Wpa.prototype.DemoLoadPackets = function()
 	this.packets = packets;
 }
 
-Wpa.prototype.Log = function(str, color, newline, buffered)
+Wpa.prototype.Log = function(str, color, newline, buffered, isbyte)
 {
 	var self = this;
 	color = color || 'black';
 	buffered = buffered || false;
+
+	if(typeof isbyte === 'undefined')
+		isbyte = true;
 
 	if(newline)
 		var nl = '<br/><br/>';
 	else
 		var nl = '';
 
+	if(isbyte)
+		var b = 'byte';
+	else
+		var b = '';
+
 	if(buffered || self.datainjectionstate === 'waiting')
 	{
-		this.logbuffer += '<span style = "color: ' + color + ';">' + str + '</span>' + nl;
+		this.logbuffer += '<span class = "' + b + '" style = "color: ' + color + ';">' + str + '</span>' + nl;
 	}
 	else
 	{
-		this.$log.append('<span style = "color: ' + color + ';">' + str + '</span>' + nl);
+		this.$log.append('<span class = "' + b + '" style = "color: ' + color + ';">' + str + '</span>' + nl);
 	}
 }
 
-Wpa.prototype.LogD = function(str, color, newline, buffered, clss, data)
+Wpa.prototype.LogD = function(str, color, newline, buffered, clss, data, isbyte)
 {
 	var self = this;
 	color = color || 'black';
 	buffered = buffered || false;
 	clss = clss || '';
 
+	if(typeof isbyte === 'undefined')
+		isbyte = true;
+
 	if(newline)
 		var nl = '<br/><br/>';
 	else
 		var nl = '';
 
+	if(isbyte)
+		var b = 'byte';
+	else
+		var b = '';
+
 	data = self.StringifyWpa(data);
 
 	if(buffered || self.datainjectionstate === 'waiting')
 	{
-		this.logbuffer += '<span class = "' + clss + '" data-wpa = "' + data + '" style = "color: ' + color + ';">' + str + '</span>' + nl;
+		this.logbuffer += '<span class = "' + b + ' ' + clss + '" data-wpa = "' + data + '" style = "color: ' + color + ';">' + str + '</span>' + nl;
 	}
 	else
 	{
-		this.$log.append('<span class = "' + clss + '" data-wpa = "' + data + '" style = "color: ' + color + ';">' + str + '</span>' + nl);
+		this.$log.append('<span class = "' + b + ' ' + clss + '" data-wpa = "' + data + '" style = "color: ' + color + ';">' + str + '</span>' + nl);
 	}
 }
 

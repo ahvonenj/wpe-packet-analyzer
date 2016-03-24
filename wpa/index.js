@@ -146,6 +146,22 @@ $(document).on('keyup', function(e)
     keysdown.splice(keysdown.indexOf(key), 1);
 });
 
+ $(document).on('mouseenter', '#wpa-analyze span.byte', function(e)
+ {
+ 	if(keysdown.indexOf('c') > -1)
+ 	{
+	 	var hex = $(this).text();
+	 	var dec = parseInt(hex, 16);
+
+		var $e = Hopper.HoverOn(e, hex + ' => ' + dec, { x: 0, y: -45});
+
+		$(this).on('mouseleave', function()
+		{
+			Hopper.HoverOut($e, true);
+		});
+	}
+ });
+
 function refreshSavedPackets()
 {
 	$('#wpa-saved-packets tr:not(:first-child)').remove();
