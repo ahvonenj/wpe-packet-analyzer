@@ -136,7 +136,7 @@ Wpa.prototype.AnalyzePackets = function()
 	{
 		var nullfound = false;
 
-		self.LogD('Packet #' + packet.num+ ' (' + packet.length + ' bytes)', self.colors.WIST, true, false, 'hoverinfo', { asd: packet.num }, false, false);
+		self.LogD('Packet #' + packet.num + ' (' + packet.length + ' bytes)', self.colors.WIST, true, false, 'hoverinfo', { asd: packet.num }, false, false);
 
 		self.LogH('<a href = "#" class = "copyablebytes">');
 
@@ -171,7 +171,7 @@ Wpa.prototype.AnalyzePackets = function()
 
 
 	// Log differing packets
-	self.Log('--Offsets that are different in every analyzed packet (using smaller packet as a base)--', self.colors.BLUE, true, false, false);
+	self.Log('--Offsets that are different in every analyzed packet (using smallest packet as a base)--', self.colors.BLUE, true, false, false);
 
 	(function()
 	{
@@ -185,7 +185,7 @@ Wpa.prototype.AnalyzePackets = function()
 		{
 			if(self.packets.hasOwnProperty(key))
 			{
-				self.LogD('Packet #' + self.packets[key].num, self.colors.WIST, true, false, 'hoverinfo', { asd: self.packets[key].num }, false, false);
+				self.LogD('Packet #' + self.packets[key].num + ' (' + packet.length + ' bytes)', self.colors.WIST, true, false, 'hoverinfo', { asd: self.packets[key].num }, false, false);
 
 				still_different = false;
 				different = false;
