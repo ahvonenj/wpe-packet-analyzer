@@ -185,7 +185,7 @@ Wpa.prototype.AnalyzePackets = function()
 		{
 			if(self.packets.hasOwnProperty(key))
 			{
-				self.LogD('Packet #' + self.packets[key].num + ' (' + packet.length + ' bytes)', self.colors.WIST, true, false, 'hoverinfo', { asd: self.packets[key].num }, false, false);
+				self.LogD('Packet #' + self.packets[key].num + ' (' + self.packets[key].length + ' bytes)', self.colors.WIST, true, false, 'hoverinfo', { asd: self.packets[key].num }, false, false);
 
 				still_different = false;
 				different = false;
