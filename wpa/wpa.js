@@ -195,7 +195,6 @@ Wpa.prototype.AnalyzePackets = function()
 
 				for(var i = 0; i < self.analysismeta.minbytes; i++)
 				{
-					console.log(delta_begin)
 					var bit = self.packets[key].bytes[i];
 
 					if(typeof bit === 'undefined')
@@ -479,6 +478,5 @@ Wpa.prototype.ParseWpa = function(wpa)
 
 Wpa.prototype.StringifyWpa = function(obj)
 {
-	console.log(obj)
 	return JSON.stringify(obj).replace(/"/g, "&quot;").replace(/'/g, '&apos;');
 }
