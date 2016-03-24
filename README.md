@@ -24,6 +24,8 @@ E) Cure cancer and make data mining of software (read: games) not so painful and
 **Definition of done:**  
 If I am able to perform a simple filtered packet bitswap in under 5 minutes, then this tool has done its job.
 
+![](https://raw.githubusercontent.com/ahvonenj/wpe-packet-analyzer/master/gh-res/wpa-awesome.png)
+
 ## Early demo is now available 
 
 http://ahvonenj.github.io/wpe-packet-analyzer/#
