@@ -88,7 +88,7 @@ $(document).on('mouseleave', '#wpa-packet-table td:first-child', function()
 	$this.text($this.data('num'));
 });
 
-$(document).on('click', '.copyablebytes', function(e)
+$(document).on('click', '.copyablebytes, .hoverbytes', function(e)
 {
 	copyTextToClipboard($(this).children('span').text());
 	Hopper.Hop(e, 'Copied!');
