@@ -10,8 +10,8 @@ B) Excel likes to fuck up the column widths and the is not enough space any way
 C) All the comparisons and analyzing must be done manually from scratch every time  
 D) Analyzing more than 2 similar packets becomes unintuitive and time consuming
 
-This simple little network packet bit analyzer tries to make analyzing packets captured with WPE a little bit easier and more automatic. 
-wpe-packet-analyzer (WPA) automatically finds out packet bit deltas and offsets from given packets and pretty prints them out. 
+This simple little network packet byte analyzer tries to make analyzing packets captured with WPE a little bit easier and more automatic. 
+wpe-packet-analyzer (WPA) automatically finds out packet byte deltas and offsets from given packets and pretty prints them out. 
 
 **Later on, WPA will:**
 
