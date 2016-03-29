@@ -76,6 +76,7 @@ a:hover
 	height: calc(100% - (100% - 31px - 31px - 5px - 80px));
 	padding: 5px 0px 5px 0px;
 	border-top: 1px solid #bdc3c7;
+	position: relative;
 }
 
 #wpa-left-control-wrapper input
@@ -86,6 +87,28 @@ a:hover
 #wpa-left-control-wrapper input:not(:last-child)
 {
 	margin-left: 5px;
+}
+
+#wpa-console-wrapper
+{
+	width: 100%;
+	height: 30px;
+	border: 1px solid #bdc3c7;
+	position: absolute;
+	bottom: 5px;
+}
+
+#wpa-console
+{
+	width: 100%;
+	height: 100%;
+	border: none;
+	resize: none;
+	display: block;
+	font-family: Consolas;
+	line-height: 30px;
+	overflow: hidden;
+	padding: 0px 5px 0px 5px;
 }
 
 #wpa-packet-table-wrapper

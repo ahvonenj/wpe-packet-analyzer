@@ -422,6 +422,16 @@ Wpa.prototype.LogH = function(html)
 	this.logbuffer += html;
 }
 
+Wpa.prototype.CLog = function(text)
+{
+	$('#wpa-console').val(text);
+}
+
+Wpa.prototype.CLear = function()
+{
+	$('#wpa-console').val('');
+}
+
 Wpa.prototype.dataelement = '';
 Wpa.prototype.datainjectionstate = 'ready';
 Wpa.prototype.datainjectionidx = null,
