@@ -155,7 +155,7 @@ Wpa.prototype.AnalyzePackets = function()
 				{
 					if(!nullfound)
 					{
-						self.LogBytes(bytestolog, ['copyablebytes']);
+						self.LogBytes(bytestolog, ['copyablebytes', 'hoverbytes']);
 						bytestolog = [];
 					}
 
@@ -169,7 +169,15 @@ Wpa.prototype.AnalyzePackets = function()
 				}
 			}
 
-			self.LogBytes(bytestolog, ['nullbytes']);
+			if(nullfound)
+			{
+				self.LogBytes(bytestolog, ['nullbytes']);
+			}
+			else
+			{
+				self.LogBytes(bytestolog, ['copyablebytes', 'hoverbytes']);
+			}
+			
 			self.LogNewLine();
 		});
 	})();
@@ -286,7 +294,7 @@ Wpa.prototype.Log = function(str, classlist, newline)
 	var classstring = ' ' + classlist.join(' ');
 	var ln = (newline) ? '<br/><br/>' : '';
 
-	this.$log.append('<span class = "text ' + classstring + '">' + str + '</span>' + ln);
+	this.$log.append('<span class = "text' + classstring + '">' + str + '</span>' + ln);
 }
 
 Wpa.prototype.CLog = function(text)
