@@ -1,5 +1,43 @@
 'use strict';
 
+Array.prototype.allValuesSame = function() 
+{
+    for(var i = 1; i < this.length; i++)
+    {
+        if(this[i] !== this[0])
+            return false;
+    }
+
+    return true;
+}
+
+Array.prototype.getUnique = function()
+{
+   var u = {}
+   var a = [];
+
+   for(var i = 0, l = this.length; i < l; ++i)
+   {
+      if(u.hasOwnProperty(this[i])) 
+      {
+         continue;
+      }
+
+      a.push(this[i]);
+      u[this[i]] = 1;
+   }
+
+   return a;
+}
+
+Array.prototype.allUnique = function()
+{
+	if(this.getUnique().length === this.length)
+		return true;
+	else
+		return false;
+}
+
 function Wpa($packet_table, $log)
 {
 	if(typeof $packet_table === 'undefined' || $($packet_table).length === 0)
@@ -49,6 +87,13 @@ Wpa.prototype.GetPacketsFromDOM = function()
 
 		packetbytes = packetbytes.split(' ');
 
+		var packetbytesdec = [];
+
+		for(var i = 0; i < packetbytes.length; i++)
+		{
+			packetbytesdec[i] = parseInt(packetbytes[i], 16);
+		}
+
 		if(packetbytes[packetbytes.length - 1] === '')
 		{
 			packetbytes.splice(packetbytes.length - 1, 1);
@@ -56,7 +101,7 @@ Wpa.prototype.GetPacketsFromDOM = function()
 
 		if(packetbytes.length > 0)
 		{
-			self.packets.push(new Packet(packetnum, packetopt, packetbytes));
+			self.packets.push(new Packet(packetnum, packetopt, packetbytes, packetbytesdec));
 		}
 		else
 		{
@@ -188,7 +233,45 @@ Wpa.prototype.AnalyzePackets = function()
 
 	(function()
 	{
-		
+		var bytestolog = [];
+		var difidxs = [];
+
+		for(var i = 0; i < self.analysismeta.minbytes; i++)
+		{
+			var different = false;
+			var bytesdec = [];
+
+			self.Loop(function(packet)
+			{
+				bytesdec.push(packet.bytesdec[i]);
+			});
+
+			if(bytesdec.allUnique())
+			{
+				difidxs.push(i);
+			}
+		}
+
+		self.Loop(function(packet)
+		{
+			self.Log('Packet #' + packet.num + ' (' + packet.length + ' bytes)', ['packetheader'], true);
+
+			var bytes = packet.bytes;
+
+			for(var i = 0; i < self.analysismeta.minbytes; i++)
+			{
+				if(difidxs.indexOf(i) > -1)
+				{
+					self.LogByte(bytes[i], ['dbggreen']);
+				}
+				else
+				{
+					self.LogByte(bytes[i]);
+				}
+			}
+
+			self.LogNewLine();
+		});
 	})();
 }
 
@@ -202,8 +285,7 @@ Wpa.prototype.Loop = function(callback)
 	{
 		if(self.packets.hasOwnProperty(key))
 		{
-			var packet = self.packets[key];
-			callback(packet, ll);
+			callback(self.packets[key], ll);
 			ll++;
 		}
 	}
