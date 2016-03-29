@@ -18,7 +18,7 @@ h1
 	font-size: 16pt;
 }
 
-a
+/*a
 {
 	text-decoration: none;
 }
@@ -39,14 +39,27 @@ a:active
 a:hover > *
 {
 	/*text-decoration: underline;*/
-	color: #1abc9c !important;
+	/*color: #1abc9c !important;
 	cursor: default;
 }
 
 a:hover
 {
 	cursor: default;
+}*/
+
+
+#wpa-analyze span
+{
+
 }
+
+#wpa-analyze span:hover > *
+{
+	color: #1abc9c !important;
+	cursor: default;
+}
+
 
 .byte:hover
 {

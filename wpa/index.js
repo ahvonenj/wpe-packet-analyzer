@@ -102,7 +102,7 @@ $(document).on('mouseenter', '.hoverbytes', function(e)
 	$(this).on('mouseleave', function()
 	{
 		Hopper.HoverOut($e);
-	})
+	});
 });
 
 var keysdown = [];
@@ -154,6 +154,8 @@ $(document).on('keyup', function(e)
 	 	var dec = parseInt(hex, 16);
 
 		var $e = Hopper.HoverOn(e, hex + ' => ' + dec, { x: 0, y: -45});
+
+		wpa.CLog('(Hex) ' + hex + ' => (Dec) ' + dec);
 
 		$(this).on('mouseleave', function()
 		{

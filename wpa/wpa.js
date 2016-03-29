@@ -89,14 +89,14 @@ Wpa.prototype.AnalyzePackets = function()
 	{
 		self.Log('Packet #' + packet.num + ' (' + packet.length + ' bytes)', self.colors.WIST, true, false, false);
 
-		self.LogH('<a href = "#" class = "copyablebytes">');
+		self.LogH('<span class = "copyablebytes">');
 
 		for(var i = 0; i < packet.bytes.length; i++)
 		{
 			self.Log(packet.bytes[i] + ' ', self.colors.GRAY, false, true);
 		}
 
-		self.LogH('</a>');
+		self.LogH('</span>');
 
 		self.OutputBuffer(true);
 		self.LogNewLine();
@@ -138,7 +138,7 @@ Wpa.prototype.AnalyzePackets = function()
 
 		self.LogD('Packet #' + packet.num + ' (' + packet.length + ' bytes)', self.colors.WIST, true, false, 'hoverinfo', { asd: packet.num }, false, false);
 
-		self.LogH('<a href = "#" class = "copyablebytes">');
+		self.LogH('<span class = "copyablebytes">');
 
 		for(var i = 0; i < self.analysismeta.maxbytes; i++)
 		{
@@ -146,7 +146,7 @@ Wpa.prototype.AnalyzePackets = function()
 			{
 				if(!nullfound)
 				{
-					self.LogH('</a>');
+					self.LogH('</span>');
 					self.OutputBuffer(true);
 				}
 
@@ -162,7 +162,7 @@ Wpa.prototype.AnalyzePackets = function()
 
 		if(!nullfound)
 		{
-			self.LogH('</a>');
+			self.LogH('</span>');
 			self.OutputBuffer(true);
 		}
 		
@@ -231,7 +231,7 @@ Wpa.prototype.AnalyzePackets = function()
 							{
 								delta_begin = i;
 
-								self.DataInjection('<a href = "#" class = "copyablebytes hoverbytes" data-wpa = "">');
+								self.DataInjection('<span class = "copyablebytes hoverbytes" data-wpa = "">');
 							}
 
 							self.Log(bit + ' ', self.colors.GREEN, false, true);
@@ -242,7 +242,7 @@ Wpa.prototype.AnalyzePackets = function()
 							if(was_different)
 							{
 								delta_end = i;
-								self.DataInjection('</a>', { begin: delta_begin, end: delta_end });
+								self.DataInjection('</span>', { begin: delta_begin, end: delta_end });
 							}
 
 							was_different = false;
