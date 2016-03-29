@@ -77,185 +77,110 @@ Wpa.prototype.AnalyzePackets = function()
 		return;
 	}
 
+	// Clear and output log header
 	self.ClearLog();
-
-	self.Log('Analysis result', null, true, false, false);
+	self.Log('Analysis result', ['resultheader'], true);
 
 
 	// Log each packet normally at first
-	self.Log('--Analyzed packets--', self.colors.BLUE, true);
-
-	self.Loop(function(packet)
-	{
-		self.Log('Packet #' + packet.num + ' (' + packet.length + ' bytes)', self.colors.WIST, true, false, false);
-
-		self.LogH('<span class = "copyablebytes">');
-
-		for(var i = 0; i < packet.bytes.length; i++)
-		{
-			self.Log(packet.bytes[i] + ' ', self.colors.GRAY, false, true);
-		}
-
-		self.LogH('</span>');
-
-		self.OutputBuffer(true);
-		self.LogNewLine();
-	});
-
-	// Find the bytecount of the packet with the most and lest bytes
-	var maxbytes = 0;
-	var largestpacket = null;
-
-	self.Loop(function(packet)
-	{
-		if(packet.bytes.length > maxbytes)
-		{
-			maxbytes = packet.length;
-		}
-	});
-
-	this.analysismeta.maxbytes = maxbytes;
-
-
-	var minbytes = 99999999999;
-
-	self.Loop(function(packet)
-	{
-		if(packet.bytes.length < minbytes)
-		{
-			minbytes = packet.length;
-		}
-	});
-
-	this.analysismeta.minbytes = minbytes;
-
-
-	// Log packets while showing null bytes relative to largest packet
-	self.Log('--Packet null bytes relative to largest packet (' + this.analysismeta.minbytes + '-' + this.analysismeta.maxbytes + ' bytes)--', self.colors.BLUE, true, false, false);
-	self.Loop(function(packet)
-	{
-		var nullfound = false;
-
-		self.LogD('Packet #' + packet.num + ' (' + packet.length + ' bytes)', self.colors.WIST, true, false, 'hoverinfo', { asd: packet.num }, false, false);
-
-		self.LogH('<span class = "copyablebytes">');
-
-		for(var i = 0; i < self.analysismeta.maxbytes; i++)
-		{
-			if(typeof packet.bytes[i] === 'undefined')
-			{
-				if(!nullfound)
-				{
-					self.LogH('</span>');
-					self.OutputBuffer(true);
-				}
-
-				self.Log('.. ', self.colors.RED);
-
-				nullfound = true;
-			}
-			else
-			{
-				self.Log(packet.bytes[i] + ' ', self.colors.GRAY, false, true);
-			}
-		}
-
-		if(!nullfound)
-		{
-			self.LogH('</span>');
-			self.OutputBuffer(true);
-		}
-		
-		self.LogNewLine();
-	});
-
-
-	// Log differing packets
-	self.Log('--Offsets that are different in every analyzed packet (using smallest packet as a base)--', self.colors.BLUE, true, false, false);
+	self.Log('--Analyzed packets--', ['sectionheader'], true);
 
 	(function()
 	{
-		var still_different = false;
-		var different = false;
-		var was_different = false;
-		var delta_begin = null;
-		var delta_end = null;
-
-		for(var key in self.packets)
+		self.Loop(function(packet)
 		{
-			if(self.packets.hasOwnProperty(key))
+			self.Log('Packet #' + packet.num + ' (' + packet.length + ' bytes)', ['packetheader'], true);
+
+			var bytestolog = [];
+
+			for(var i = 0; i < packet.bytes.length; i++)
 			{
-				self.LogD('Packet #' + self.packets[key].num + ' (' + self.packets[key].length + ' bytes)', self.colors.WIST, true, false, 'hoverinfo', { asd: self.packets[key].num }, false, false);
-
-				still_different = false;
-				different = false;
-				was_different = false;
-				delta_begin = null;
-				delta_end = null;
-
-				for(var i = 0; i < self.analysismeta.minbytes; i++)
-				{
-					var bit = self.packets[key].bytes[i];
-
-					if(typeof bit === 'undefined')
-					{
-						self.Log('.. ', self.colors.RED);
-					}
-					else
-					{
-						different = false;
-
-						var a = [];
-
-						for(var key2 in self.packets)
-						{
-							if(self.packets.hasOwnProperty(key2))
-							{
-								var bit2 = self.packets[key2].bytes[i];
-
-								if(bit === bit2)
-								{
-									different = false;
-								}
-								else
-								{
-									different = true;
-									break;
-								}
-							}
-						}
-
-						if(different)
-						{
-							if(!was_different)
-							{
-								delta_begin = i;
-
-								self.DataInjection('<span class = "copyablebytes hoverbytes" data-wpa = "">');
-							}
-
-							self.Log(bit + ' ', self.colors.GREEN, false, true);
-							was_different = true;
-						}
-						else
-						{
-							if(was_different)
-							{
-								delta_end = i;
-								self.DataInjection('</span>', { begin: delta_begin, end: delta_end });
-							}
-
-							was_different = false;
-
-							self.Log(bit + ' ', self.colors.GRAY, false, true);
-							self.OutputBuffer(true);
-						}
-					}
-				}
-
-				self.LogNewLine();
+				bytestolog.push(packet.bytes[i]);
 			}
-		}
+
+			self.LogBytes(bytestolog, ['hoverbytes']);
+
+			self.LogNewLine();
+		});
+	})();
+
+
+	// Find the bytecount of the packet with the most and lest bytes
+	(function()
+	{
+		var maxbytes = 0;
+		var largestpacket = null;
+
+		self.Loop(function(packet)
+		{
+			if(packet.bytes.length > maxbytes)
+			{
+				maxbytes = packet.length;
+			}
+		});
+
+		self.analysismeta.maxbytes = maxbytes;
+
+
+		var minbytes = 99999999999;
+
+		self.Loop(function(packet)
+		{
+			if(packet.bytes.length < minbytes)
+			{
+				minbytes = packet.length;
+			}
+		});
+
+		self.analysismeta.minbytes = minbytes;
+	})();
+	
+
+	// Log packets while showing null bytes relative to largest packet
+	self.Log('--Packet null bytes relative to largest packet (' + this.analysismeta.minbytes + '-' + this.analysismeta.maxbytes + ' bytes)--', ['sectionheader'], true);
+
+	(function()
+	{
+		self.Loop(function(packet)
+		{
+			var nullfound = false;
+
+			self.Log('Packet #' + packet.num + ' (' + packet.length + ' bytes)', ['packetheader'], true);
+
+			var bytestolog = [];
+
+			for(var i = 0; i < self.analysismeta.maxbytes; i++)
+			{
+				if(typeof packet.bytes[i] === 'undefined')
+				{
+					if(!nullfound)
+					{
+						self.LogBytes(bytestolog, ['copyablebytes']);
+						bytestolog = [];
+					}
+
+					bytestolog.push('..');
+
+					nullfound = true;
+				}
+				else
+				{
+					bytestolog.push(packet.bytes[i]);
+				}
+			}
+
+			self.LogBytes(bytestolog, ['nullbytes']);
+			self.LogNewLine();
+		});
+	})();
+
+
+	// Log differing packets
+	self.Log('--Offsets that are different in every analyzed packet (using smallest packet as a base)--', ['sectionheader'], true);
+
+	(function()
+	{
+		
 	})();
 }
 
@@ -355,71 +280,13 @@ Wpa.prototype.DemoLoadPackets = function()
 	this.packets = packets;
 }
 
-Wpa.prototype.Log = function(str, color, newline, buffered, isbyte)
+Wpa.prototype.Log = function(str, classlist, newline)
 {
 	var self = this;
-	color = color || 'black';
-	buffered = buffered || false;
+	var classstring = ' ' + classlist.join(' ');
+	var ln = (newline) ? '<br/><br/>' : '';
 
-	if(typeof isbyte === 'undefined')
-		isbyte = true;
-
-	if(newline)
-		var nl = '<br/><br/>';
-	else
-		var nl = '';
-
-	if(isbyte)
-		var b = 'byte';
-	else
-		var b = '';
-
-	if(buffered || self.datainjectionstate === 'waiting')
-	{
-		this.logbuffer += '<span class = "' + b + '" style = "color: ' + color + ';">' + str + '</span>' + nl;
-	}
-	else
-	{
-		this.$log.append('<span class = "' + b + '" style = "color: ' + color + ';">' + str + '</span>' + nl);
-	}
-}
-
-Wpa.prototype.LogD = function(str, color, newline, buffered, clss, data, isbyte)
-{
-	var self = this;
-	color = color || 'black';
-	buffered = buffered || false;
-	clss = clss || '';
-
-	if(typeof isbyte === 'undefined')
-		isbyte = true;
-
-	if(newline)
-		var nl = '<br/><br/>';
-	else
-		var nl = '';
-
-	if(isbyte)
-		var b = 'byte';
-	else
-		var b = '';
-
-	data = self.StringifyWpa(data);
-
-	if(buffered || self.datainjectionstate === 'waiting')
-	{
-		this.logbuffer += '<span class = "' + b + ' ' + clss + '" data-wpa = "' + data + '" style = "color: ' + color + ';">' + str + '</span>' + nl;
-	}
-	else
-	{
-		this.$log.append('<span class = "' + b + ' ' + clss + '" data-wpa = "' + data + '" style = "color: ' + color + ';">' + str + '</span>' + nl);
-	}
-}
-
-Wpa.prototype.LogH = function(html)
-{
-	var self = this;
-	this.logbuffer += html;
+	this.$log.append('<span class = "text ' + classstring + '">' + str + '</span>' + ln);
 }
 
 Wpa.prototype.CLog = function(text)
@@ -430,30 +297,6 @@ Wpa.prototype.CLog = function(text)
 Wpa.prototype.CLear = function()
 {
 	$('#wpa-console').val('');
-}
-
-Wpa.prototype.dataelement = '';
-Wpa.prototype.datainjectionstate = 'ready';
-Wpa.prototype.datainjectionidx = null,
-
-Wpa.prototype.DataInjection = function(d, obj)
-{
-	var self = this;
-
-	if(self.datainjectionstate === 'ready')
-	{
-		self.dataelement = d;
-		self.datainjectionidx = self.logbuffer.length;
-		self.datainjectionstate = 'waiting';
-	}
-	else if(self.datainjectionstate === 'waiting')
-	{
-		self.dataelement = $(self.dataelement).attr('data-wpa', self.StringifyWpa(obj)).prop('outerHTML').replace(/>(.*)/gi, '') + '>';
-		self.logbuffer =  [self.logbuffer.slice(0, self.datainjectionidx), self.dataelement, self.logbuffer.slice(self.datainjectionidx), d].join('');
-		self.dataelement = '';
-
-		self.datainjectionstate = 'ready';
-	}
 }
 
 Wpa.prototype.OutputBuffer = function(clearbuffer)
@@ -478,7 +321,7 @@ Wpa.prototype.ClearLog = function()
 	this.$log.empty();
 }
 
-Wpa.prototype.ParseWpa = function(wpa)
+Wpa.prototype.CustomParseJSON = function(wpa)
 {
 	if(typeof wpa === 'undefined')
 		return {};
@@ -486,7 +329,52 @@ Wpa.prototype.ParseWpa = function(wpa)
 		return JSON.parse(wpa.replace(/&quot;/g, '"').replace(/&apos;/g, "'"));
 }
 
-Wpa.prototype.StringifyWpa = function(obj)
+Wpa.prototype.CustomStringifyJSON = function(obj)
 {
-	return JSON.stringify(obj).replace(/"/g, "&quot;").replace(/'/g, '&apos;');
+	if(typeof obj === 'undefined')
+		return '';
+	else
+		return JSON.stringify(obj).replace(/"/g, "&quot;").replace(/'/g, '&apos;');
+}
+
+Wpa.prototype.LogByte = function(byte, classlist, buffered)
+{
+	var self = this;
+
+	var buffered = buffered || false;
+	var classstring = (classlist && classlist.length > 0) ? ' ' + classlist.join(' ') : '';
+	var empty = '<span class = "empty">&nbsp;</span>';
+	empty = '';
+
+	if(buffered)
+	{
+		this.logbuffer += '<span class = "byte' + classstring + '">' + byte + '</span> ' + empty;
+	}
+	else
+	{
+		this.$log.append('<span class = "byte' + classstring + '">' + byte + '</span> ' + empty);
+	}
+}
+
+Wpa.prototype.LogBytes = function(bytes, groupclasslist, groupdata)
+{
+	var self = this;
+
+	var classstring = (groupclasslist && groupclasslist.length > 0) ? ' ' + groupclasslist.join(' ') : '';
+	groupdata = this.CustomStringifyJSON(groupdata);
+
+	this.logbuffer += '<span class = "bytegroup' + classstring + '" data-wpa = "' + groupdata + '">';
+
+	for(var key in bytes)
+	{
+		if(bytes.hasOwnProperty(key))
+		{
+			var byte = bytes[key];
+			self.LogByte(byte, null, true);
+		}
+	}
+
+	this.logbuffer += '</span>';
+
+	this.OutputBuffer(true);
 }
