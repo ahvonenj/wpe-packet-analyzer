@@ -228,7 +228,7 @@ Wpa.prototype.AnalyzePackets = function()
 	})();
 
 
-	// Log differing packets
+	// Log differing packets (THIS IS NOT OPTIMAL, BUT IT WILL DO)
 	self.Log('--Offsets that are different in every analyzed packet (using smallest packet as a base)--', ['sectionheader'], true);
 
 	(function()
