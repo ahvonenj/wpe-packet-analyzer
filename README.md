@@ -6,7 +6,7 @@ When you have captured network packets with WPE and want to compare similar pack
 you would often have to fire up Microsoft Excel and get annoyed because:
 
 A) It is hard to paste the packet data into excel (have to save the data into a text file first, to benefit from automatic column separation)  
-B) Excel likes to fuck up the column widths and the is not enough space any way  
+B) Excel likes to fuck up the column widths and there is not enough space any way  
 C) All the comparisons and analyzing must be done manually from scratch every time  
 D) Analyzing more than 2 similar packets becomes unintuitive and time consuming
 
