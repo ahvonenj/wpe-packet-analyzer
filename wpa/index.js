@@ -73,7 +73,7 @@ $(document).on('click', '#wpa-packet-table td:first-child', function()
 	});
 });
 
-$(document).on('mouseenter', '#wpa-packet-table td:first-child', function()
+/*$(document).on('mouseenter', '#wpa-packet-table td:first-child', function()
 {
 	var $this = $(this);
 
@@ -86,7 +86,7 @@ $(document).on('mouseleave', '#wpa-packet-table td:first-child', function()
 	var $this = $(this);
 
 	$this.text($this.data('num'));
-});
+});*/
 
 $(document).on('click', '.copyablebytes, .hoverbytes', function(e)
 {
@@ -94,10 +94,23 @@ $(document).on('click', '.copyablebytes, .hoverbytes', function(e)
 	Hopper.Hop(e, 'Copied!');
 });
 
-$(document).on('mouseenter', '.hoverbytes', function(e)
+$(document).on('mouseenter', '.offsethover', function(e)
 {
-	var data = wpa.ParseWpa($(this).data('wpa'));
-	var $e = Hopper.HoverOn(e, 'Offset: ' + data.begin + '-' + data.end);
+	var $data = $(this).data('wpa');
+
+	if(typeof $data === 'undefined' || $data === null)
+		return;
+
+	var data = $data;
+
+	if(typeof data.offset === 'undefined')
+	{
+		var $e = Hopper.HoverOn(e, 'Offset: ' + data.begin + ' - ' + data.end);
+	}
+	else
+	{
+		var $e = Hopper.HoverOn(e, 'Offset: ' + data.offset);
+	}
 
 	$(this).on('mouseleave', function()
 	{

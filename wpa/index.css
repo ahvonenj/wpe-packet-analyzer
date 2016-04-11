@@ -37,7 +37,7 @@ h1
 
 .hoverbytes:hover > *
 {
-	color: #1abc9c !important;
+	color: #d35400 !important;
 	cursor: default;
 }
 
@@ -51,7 +51,7 @@ h1
 	color: #7f8c8d;
 }
 
-.dbggreen
+.dbggreen > span
 {
 	color: #1abc9c;
 }
