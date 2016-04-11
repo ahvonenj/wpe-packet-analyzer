@@ -16,10 +16,8 @@ wpe-packet-analyzer (WPA) automatically finds out packet byte deltas and offsets
 **Later on, WPA will:**
 
 A) Heuristically find out, if given packets seem to have `common blocks`, such as `time` or `id` bytes at the beginning of the packet  
-B) Help to convert hex bytes to decimal and perhaps even back again if needed (ASCII presentation also a possibility, although usually not useful  
-C) Assist with marking certain bytes obsolete or socket-breaking  
-D) Maybe accept WPE capture files and read input directly from them  
-E) Cure cancer and make data mining of software (read: games) not so painful and maybe even fun
+B) Maybe accept WPE capture files and read input directly from them  
+C) Hpefully make data mining of software (read: games) not so painful and maybe even fun  
 
 **Definition of done:**  
 If it takes me no more than 5 minutes to to find the significant bytes,  then this tool has done its job.
@@ -34,4 +32,14 @@ http://ahvonenj.github.io/wpe-packet-analyzer/#
 
 Just press the `Analyze packets` button and see the magic happen! You can mouse over the analyzed bytes to highlight them as well as click to copy them straight to your clipboard (if you browser supports it).
 
-By holding down `C` and hovering your mouse over a byte, you can see its realtime conversion from hexadecimal to decimal.
+- Hold C to copy a group of bytes (which are hovered over with mouse) to clipboard
+- Hold Z and click on bytes to mark them as important
+- Hold X and click on bytes to mark them as not important
+- Hold A while hovering over a byte to see its decimal form
+
+
+## Extra
+
+### Marking bytes
+
+![](http://puu.sh/oeqD0/51e8caf024.PNG)

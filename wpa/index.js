@@ -34,7 +34,7 @@ $(document).on('click', '#help', function()
 {
 	alert('- Hold C to copy a group of bytes (which are hovered over with mouse) to clipboard\n' + 
 		'- Hold Z and click on bytes to mark them as important\n' +
-		'- Hold X and click obytes to mark them as not important\n' +
+		'- Hold X and click on bytes to mark them as not important\n' +
 		'- Hold A while hovering over a byte to see its decimal form')
 });
 
