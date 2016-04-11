@@ -34,4 +34,7 @@ http://ahvonenj.github.io/wpe-packet-analyzer/#
 
 Just press the `Analyze packets` button and see the magic happen! You can mouse over the analyzed bytes to highlight them as well as click to copy them straight to your clipboard (if you browser supports it).
 
-By holding down `C` and hovering your mouse over a byte, you can see its realtime conversion from hexadecimal to decimal.
+- Hold C to copy a group of bytes (which are hovered over with mouse) to clipboard
+- Hold Z and click on bytes to mark them as important
+- Hold X and click obytes to mark them as not important
+- Hold A while hovering over a byte to see its decimal form
