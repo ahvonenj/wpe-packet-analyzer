@@ -56,6 +56,17 @@ h1
 	color: #1abc9c;
 }
 
+.markedbyte
+{
+	outline: 1px solid #e74c3c;
+}
+
+.obsoletebyte
+{
+	color: #bdc3c7 !important;
+	outline: 1px solid #bdc3c7;
+}
+
 /* /LOG COLORING/ */
 
 
@@ -351,4 +362,10 @@ h1
 {
 	border-bottom: 1px solid white;
 	padding: 10px;
+}
+
+.empty
+{
+	display: inline-block;
+    width: 10px;
 }

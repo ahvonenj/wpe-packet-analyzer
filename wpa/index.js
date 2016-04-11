@@ -83,25 +83,27 @@ $(document).on('click', '#wpa-packet-table td:first-child', function()
 	});
 });
 
-/*$(document).on('mouseenter', '#wpa-packet-table td:first-child', function()
+$(document).on('click', '.byte', function(e)
 {
-	var $this = $(this);
-
-	$this.data('num', $this.text());
-	$this.text('X');
+	if(keysdown.indexOf('z') > -1)
+ 	{
+		$(this).toggleClass('markedbyte');
+		$(this).removeClass('obsoletebyte');
+	}
+	else if(keysdown.indexOf('x') > -1)
+	{
+		$(this).toggleClass('obsoletebyte');
+		$(this).removeClass('markedbyte');
+	}
 });
-
-$(document).on('mouseleave', '#wpa-packet-table td:first-child', function()
-{
-	var $this = $(this);
-
-	$this.text($this.data('num'));
-});*/
 
 $(document).on('click', '.copyablebytes, .hoverbytes', function(e)
 {
-	copyTextToClipboard($(this).children('span').text());
-	Hopper.Hop(e, 'Copied!');
+	if(keysdown.indexOf('c') > -1)
+ 	{
+		copyTextToClipboard($(this).children('span').text());
+		Hopper.Hop(e, 'Copied!');
+	}
 });
 
 $(document).on('mouseenter', '.offsethover', function(e)
@@ -133,45 +135,25 @@ var keysdown = [];
 $(document).on('keydown', function(e)
 {
     // Evaluate keycode into a lowercase human-readable letter
-    var key = String.fromCharCode(e.charCode).toLowerCase();
-    
-    // Figure what to do with each key
-    switch(key)
-    {
-        case 'c':
-            
-            break;
-            
-        default:
-            break;
-    }
+    var key = String.fromCharCode(e.which).toLowerCase();
 
-    if(keysdown.indexOf('c') === -1)
-    	keysdown.push('c');
+    if(keysdown.indexOf(key) === -1)
+    {
+    	keysdown.push(key);
+    }
 });
 
 $(document).on('keyup', function(e)
 {
     // Evaluate keycode into a lowercase human-readable letter
-    var key = String.fromCharCode(e.charCode).toLowerCase();
-    
-    // Figure what to do with each key
-    switch(key)
-    {
-        case 'c':
-            
-            break;
-            
-        default:
-            break;
-    }
+    var key = String.fromCharCode(e.which).toLowerCase();
 
     keysdown.splice(keysdown.indexOf(key), 1);
 });
 
  $(document).on('mouseenter', '#wpa-analyze span.byte', function(e)
  {
- 	if(keysdown.indexOf('c') > -1)
+ 	if(keysdown.indexOf('a') > -1)
  	{
 	 	var hex = $(this).text();
 	 	var dec = parseInt(hex, 16);
@@ -209,6 +191,11 @@ function refreshSavedPackets()
 		}
 	}
 }
+
+ setInterval(function()
+ {
+ 	console.log(keysdown)
+ }, 500)
 
 function copyTextToClipboard(text) 
 {
