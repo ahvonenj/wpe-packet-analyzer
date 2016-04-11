@@ -252,9 +252,13 @@ Wpa.prototype.AnalyzePackets = function()
 			}
 		}
 
+		var bytestolog = [];
+		var begin  = null;
+		var end = null;
+
 		self.Loop(function(packet)
 		{
-			self.Log('Packet #' + packet.num + ' (' + packet.length + ' bytes)', ['packetheader'], true);
+			self.Log('Packet #' + packet.num + ' (' + packet.length + ' bytes (nulls not shown))', ['packetheader'], true);
 
 			var bytes = packet.bytes;
 
@@ -262,12 +266,33 @@ Wpa.prototype.AnalyzePackets = function()
 			{
 				if(difidxs.indexOf(i) > -1)
 				{
-					self.LogByte(bytes[i], ['dbggreen']);
+					begin = i;
+					bytestolog.push(bytes[i]);
 				}
 				else
 				{
+					if(bytestolog.length > 0)
+					{
+						end = i;
+
+						if(bytestolog.length === 1)
+						{
+							self.LogBytes(bytestolog, ['dbggreen', 'hoverbytes', 'offsethover'], { offset: begin });
+						}
+						else
+						{
+							self.LogBytes(bytestolog, ['dbggreen', 'hoverbytes', 'offsethover'], { begin: begin, end: end });
+						}
+						bytestolog = [];
+					}
 					self.LogByte(bytes[i]);
 				}
+			}
+
+			if(bytestolog.length > 0)
+			{
+				self.LogBytes(bytestolog, ['dbggreen', 'hoverbytes']);
+				bytestolog = [];
 			}
 
 			self.LogNewLine();
@@ -434,15 +459,15 @@ Wpa.prototype.LogByte = function(byte, classlist, buffered)
 	var buffered = buffered || false;
 	var classstring = (classlist && classlist.length > 0) ? ' ' + classlist.join(' ') : '';
 	var empty = '<span class = "empty">&nbsp;</span>';
-	empty = '';
+	empty = ' ';
 
 	if(buffered)
 	{
-		this.logbuffer += '<span class = "byte' + classstring + '">' + byte + '</span> ' + empty;
+		this.logbuffer += '<span class = "byte' + classstring + '">' + byte + ' </span>';
 	}
 	else
 	{
-		this.$log.append('<span class = "byte' + classstring + '">' + byte + '</span> ' + empty);
+		this.$log.append('<span class = "byte' + classstring + '">' + byte + ' </span>');
 	}
 }
 
@@ -451,9 +476,16 @@ Wpa.prototype.LogBytes = function(bytes, groupclasslist, groupdata)
 	var self = this;
 
 	var classstring = (groupclasslist && groupclasslist.length > 0) ? ' ' + groupclasslist.join(' ') : '';
-	groupdata = this.CustomStringifyJSON(groupdata);
 
-	this.logbuffer += '<span class = "bytegroup' + classstring + '" data-wpa = "' + groupdata + '">';
+	if(typeof groupdata !== 'undefined' && groupdata !== null)
+	{
+		groupdata = this.CustomStringifyJSON(groupdata);
+		this.logbuffer += '<span class = "bytegroup' + classstring + '" data-wpa = "' + groupdata + '">';
+	}
+	else
+	{
+		this.logbuffer += '<span class = "bytegroup' + classstring + '">';
+	}
 
 	for(var key in bytes)
 	{
