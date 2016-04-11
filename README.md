@@ -15,9 +15,9 @@ wpe-packet-analyzer (WPA) automatically finds out packet byte deltas and offsets
 
 **Later on, WPA will:**
 
-A) Heuristically find out, if given packets seem to have `common blocks`, such as `time` or `id` bytes at the beginning of the packet 
+A) Heuristically find out, if given packets seem to have `common blocks`, such as `time` or `id` bytes at the beginning of the packet  
 B) Maybe accept WPE capture files and read input directly from them  
-C) Hpefully make data mining of software (read: games) not so painful and maybe even fun
+C) Hpefully make data mining of software (read: games) not so painful and maybe even fun  
 
 **Definition of done:**  
 If it takes me no more than 5 minutes to to find the significant bytes,  then this tool has done its job.
