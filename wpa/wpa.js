@@ -118,6 +118,7 @@ Wpa.prototype.AnalyzePackets = function()
 
 	if(this.packets.length === 0)
 	{
+		self.CLog('WPA has no packets to analyze!');
 		throw new Error('WPA has no packets to analyze!');
 		return;
 	}
@@ -505,4 +506,9 @@ Wpa.prototype.DeletePackets = function()
 {
 	this.$packet_table.find('tr:not(:first-child):not(:nth-child(2))').remove();
 	this.$packet_table.find('tr:nth-child(2) td textarea').val('');
+
+	this.packets = [];
+	this.analysismeta = {};
+	this.logbuffer = '';
+	this.$log.empty();
 }
