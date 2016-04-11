@@ -42,4 +42,6 @@ Just press the `Analyze packets` button and see the magic happen! You can mouse 
 
 ## Extra
 
+### Marking bytes
+
 ![](http://puu.sh/oeqD0/51e8caf024.PNG)
