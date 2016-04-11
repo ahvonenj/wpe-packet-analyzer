@@ -460,15 +460,14 @@ Wpa.prototype.LogByte = function(byte, classlist, buffered)
 	var buffered = buffered || false;
 	var classstring = (classlist && classlist.length > 0) ? ' ' + classlist.join(' ') : '';
 	var empty = '<span class = "empty">&nbsp;</span>';
-	empty = ' ';
 
 	if(buffered)
 	{
-		this.logbuffer += '<span class = "byte' + classstring + '">' + byte + ' </span>';
+		this.logbuffer += '<span class = "byte' + classstring + '">' + byte + '</span>' + empty;
 	}
 	else
 	{
-		this.$log.append('<span class = "byte' + classstring + '">' + byte + ' </span>');
+		this.$log.append('<span class = "byte' + classstring + '">' + byte + '</span>' + empty);
 	}
 }
 
