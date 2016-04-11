@@ -18,35 +18,57 @@ h1
 	font-size: 16pt;
 }
 
-a
+/* LOG COLORING */
+
+.resultheader
 {
-	text-decoration: none;
+
 }
 
-a:visited
+.sectionheader
 {
-	text-decoration: none;
+	color: #2980b9;	
+}
+
+.packetheader
+{
+	color: #8e44ad;
+}
+
+.hoverbytes:hover > *
+{
+	color: #d35400 !important;
 	cursor: default;
 }
 
-a:active
+.nullbytes
 {
-	text-decoration: none;
-	color: #d35400;
-	cursor: default;
+	color: #c0392b;
 }
 
-a:hover > *
+.byte
 {
-	/*text-decoration: underline;*/
-	color: #1abc9c !important;
-	cursor: default;
+	color: #7f8c8d;
 }
 
-a:hover
+.dbggreen > span
 {
-	cursor: default;
+	color: #1abc9c;
 }
+
+/* /LOG COLORING/ */
+
+
+#wpa-analyze span
+{
+
+}
+
+#wpa-analyze span:hover > *
+{
+	
+}
+
 
 .byte:hover
 {
@@ -73,8 +95,10 @@ a:hover
 #wpa-left-control-wrapper
 {
 	width: 100%;
-	height: calc(36px + 5px + 5px);
+	height: calc(100% - (100% - 31px - 31px - 5px - 80px));
 	padding: 5px 0px 5px 0px;
+	border-top: 1px solid #bdc3c7;
+	position: relative;
 }
 
 #wpa-left-control-wrapper input
@@ -87,11 +111,33 @@ a:hover
 	margin-left: 5px;
 }
 
+#wpa-console-wrapper
+{
+	width: 100%;
+	height: 30px;
+	border: 1px solid #bdc3c7;
+	position: absolute;
+	bottom: 5px;
+}
+
+#wpa-console
+{
+	width: 100%;
+	height: 100%;
+	border: none;
+	resize: none;
+	display: block;
+	font-family: Consolas;
+	line-height: 30px;
+	overflow: hidden;
+	padding: 0px 5px 0px 5px;
+}
+
 #wpa-packet-table-wrapper
 {
 	overflow-y: auto;
 	width: 100%;
-	height: calc(100% - 31px - 31px - 5px);
+	height: calc(100% - 31px - 31px - 5px - 100px);
 }
 
 #wpa-packet-table
@@ -157,7 +203,7 @@ a:hover
 {
 	overflow-y: auto;
 	width: 100%;
-	height: calc(100% - 25px);
+	height: calc(100% - 20px);
 	padding: 5px 0px 5px 0px;
 }
 
