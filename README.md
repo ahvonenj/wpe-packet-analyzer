@@ -34,7 +34,7 @@ Just press the `Analyze packets` button and see the magic happen! You can mouse 
 
 - Hold C to copy a group of bytes (which are hovered over with mouse) to clipboard
 - Hold Z and click on bytes to mark them as important
-- Hold X and click obytes to mark them as not important
+- Hold X and click on bytes to mark them as not important
 - Hold A while hovering over a byte to see its decimal form
 
 
