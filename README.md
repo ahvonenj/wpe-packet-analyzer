@@ -6,7 +6,7 @@ When you have captured network packets with WPE and want to compare similar pack
 you would often have to fire up Microsoft Excel and get annoyed because:
 
 A) It is hard to paste the packet data into excel (have to save the data into a text file first, to benefit from automatic column separation)  
-B) Excel likes to fuck up the column widths and the is not enough space any way  
+B) Excel likes to fuck up the column widths and there is not enough space any way  
 C) All the comparisons and analyzing must be done manually from scratch every time  
 D) Analyzing more than 2 similar packets becomes unintuitive and time consuming
 
@@ -30,4 +30,8 @@ If it takes me no more than 5 minutes to to find the significant bytes,  then th
 
 http://ahvonenj.github.io/wpe-packet-analyzer/#
 
+## Instructions
+
 Just press the `Analyze packets` button and see the magic happen! You can mouse over the analyzed bytes to highlight them as well as click to copy them straight to your clipboard (if you browser supports it).
+
+By holding down `C` and hovering your mouse over a byte, you can see its realtime conversion from hexadecimal to decimal.

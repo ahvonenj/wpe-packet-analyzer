@@ -20,6 +20,16 @@ $(document).on('click', '#savepackets', function()
 	refreshSavedPackets();
 });
 
+$(document).on('click', '#deletepackets', function()
+{
+	var r = confirm("Delete ALL packets?");
+
+	if(r)
+	{
+		wpa.DeletePackets();
+	}
+});
+
 $(document).on('click', '#loadpackets', function()
 {
 	$('.wpa-hider').fadeIn();
