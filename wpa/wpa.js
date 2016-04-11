@@ -500,3 +500,9 @@ Wpa.prototype.LogBytes = function(bytes, groupclasslist, groupdata)
 
 	this.OutputBuffer(true);
 }
+
+Wpa.prototype.DeletePackets = function()
+{
+	this.$packet_table.find('tr:not(:first-child):not(:nth-child(2))').remove();
+	this.$packet_table.find('tr:nth-child(2) td textarea').val('');
+}
