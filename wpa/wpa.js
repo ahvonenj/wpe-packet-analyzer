@@ -256,6 +256,7 @@ Wpa.prototype.AnalyzePackets = function()
 		var bytestolog = [];
 		var begin  = null;
 		var end = null;
+		var begin_marked = false;
 
 		self.Loop(function(packet)
 		{
@@ -267,14 +268,19 @@ Wpa.prototype.AnalyzePackets = function()
 			{
 				if(difidxs.indexOf(i) > -1)
 				{
-					begin = i;
+					if(!begin_marked)
+					{
+						begin = i;
+						begin_marked = true;
+					}
+
 					bytestolog.push(bytes[i]);
 				}
 				else
 				{
 					if(bytestolog.length > 0)
 					{
-						end = i;
+						end = i-1;
 
 						if(bytestolog.length === 1)
 						{
@@ -286,7 +292,9 @@ Wpa.prototype.AnalyzePackets = function()
 						}
 						bytestolog = [];
 					}
+
 					self.LogByte(bytes[i]);
+					begin_marked = false;
 				}
 			}
 
